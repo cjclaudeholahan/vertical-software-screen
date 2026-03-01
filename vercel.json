@@ -1,5 +1,0 @@
-{
-  "buildCommand": "cd permira-screen && npm install && npm run build",
-  "outputDirectory": "permira-screen/dist",
-  "installCommand": "echo 'skip'"
-}
