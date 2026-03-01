@@ -56,7 +56,7 @@ function scoreCompany(co,dcf,lbo){
   const mktLead=(Math.min(Math.max(co.cagr,0),25)/25)*0.40;
   const investGrade={"High":0.30,"Medium-High":0.225,"Medium":0.15,"Low-Medium":0.075,"Low":0}[co.peFit]||0.15;
   const qualScore=Math.min(mktPos+revMoat+pricingPwr+mktLead+investGrade,3);
-  const aiBase={"Low":2.6,"Low-Medium":2.0,"Medium":1.4,"Medium-High":0.8,"High":0.1}[co.aiRisk]||1.4;
+  const aiBase={"Low":2.6,"Medium":1.4,"High":0.1}[co.aiRisk]||1.4;
   const aiScore=Math.min(Math.max(aiBase+(co.sor?0.2:0)+(co.pricing==="Usage-Based"?0.2:-0.2)+(co.peOwned?0.2:0),0),3);
   const lboScore=lbo.irr>=IRR_GREAT?3:lbo.irr>=IRR_GOOD?2.2:lbo.irr>=IRR_OK?1.4:Math.max(0,lbo.irr/IRR_OK*1.4);
   const dcfScore=Math.min(Math.max(1+(dcf.intrinsic-co.tev)/co.tev*1.5,0),2);
@@ -68,7 +68,7 @@ function scoreCompany(co,dcf,lbo){
 // ─── DATA ─────────────────────────────────────────────────────────────────────
 const RAW=[
   // ── PURE-PLAY VSaaS ──
-  {name:"Autodesk",vertical:"Construction & Design",sor:true,seat:false,pricing:"Usage-Based",peOwned:false,tev:50164,ntmRev:8019,growth:11,gm:92,ebitda:40,cagr:13,ntmRevX:6.3,peFit:"Medium",aiRisk:"Low-Medium",avoid:false,
+  {name:"Autodesk",vertical:"Construction & Design",sor:true,seat:false,pricing:"Usage-Based",peOwned:false,tev:50164,ntmRev:8019,growth:11,gm:92,ebitda:40,cagr:13,ntmRevX:6.3,peFit:"Medium",aiRisk:"Low",avoid:false,
    desc:"Cloud-based design, engineering, and construction software (AutoCAD, Revit, BIM 360) serving architects, engineers, and contractors globally. The system of record for building and infrastructure design workflows. Usage-based subscription model with revenue tied to project activity and cloud storage.",
    sd:{sharePrice:231.80,sharesOut:214,marketCap:49491,netDebt:2559-1886},
    thesis:["Dominant construction/design SoR with 92% GM and 40% EBITDA — best-in-class unit economics","Cloud transition largely complete — pure recurring revenue base provides high visibility","13% N3Y CAGR demonstrates consistent compounding; AEC market digitization still underpenetrated","AI is a tailwind — Autodesk AI tools enhance platform value rather than threaten it","Above $10B TEV — primarily a public market benchmark; take-private at this scale is extremely rare"],
@@ -103,7 +103,7 @@ const RAW=[
    sd:{sharePrice:79.93,sharesOut:114,marketCap:9134,netDebt:570-211},
    thesis:["97% gross margin AEC software SoR — best gross margin in the entire screen by a wide margin","Usage-based model with 19% N3Y CAGR demonstrates consistent compounding in a defensible niche","Just below $10B TEV — relevant for our screening universe with strong financial characteristics","50% off 52W high creates a compelling entry point for a high-quality European construction software platform","Low AI risk given SoR status and specialized AEC workflows"],
    aiRationale:["SoR for architecture, engineering, and construction design workflows across Europe","97% gross margins reflect pure software delivery — AI enhances but does not displace core BIM workflows","Usage-based model means revenue tied to project activity, not headcount — insulated from AI compression","European regulatory environment for construction is highly prescriptive — slows AI adoption meaningfully","Low risk: AEC SoR status, usage-based pricing, and European regulatory protection combine for strong moat"]},
-  {name:"Manhattan Associates",vertical:"Supply Chain",sor:true,seat:false,pricing:"Usage-Based",peOwned:false,tev:8082,ntmRev:1162,growth:6,gm:60,ebitda:35,cagr:6,ntmRevX:7.0,peFit:"Medium",aiRisk:"Low-Medium",avoid:false,
+  {name:"Manhattan Associates",vertical:"Supply Chain",sor:true,seat:false,pricing:"Usage-Based",peOwned:false,tev:8082,ntmRev:1162,growth:6,gm:60,ebitda:35,cagr:6,ntmRevX:7.0,peFit:"Medium",aiRisk:"Low",avoid:false,
    desc:"Supply chain execution software covering warehouse management (WMS), order management (OMS), and inventory optimization for retail and logistics enterprises. The SoR for omnichannel fulfillment operations at major retailers globally with a cloud transition largely complete. Usage-based model tied to transaction volumes processed.",
    sd:{sharePrice:138.30,sharesOut:60,marketCap:8349,netDebt:61-329},
    thesis:["Dominant supply chain SoR with 60% GM and 35% EBITDA — mission critical for retail and logistics","Cloud transition largely complete with high recurring revenue mix and strong retention","Just below $10B TEV — within our screening universe; 39% off 52W high creates potential entry","6% growth is below peers but reflects a mature, highly penetrated install base","Usage-based model with net cash position provides additional financial flexibility"],
@@ -113,17 +113,12 @@ const RAW=[
    sd:{sharePrice:55.29,sharesOut:150,marketCap:8306,netDebt:79-768},
    thesis:["Dominant construction SoR with 82% GM — mission-critical for billion-dollar project delivery where switching mid-project is not an option","10% NTM growth at 6.1x NTM Rev — deceleration from hypergrowth now priced in; story shifts to margin expansion from 20% toward 35%+ over hold","Clear PE margin expansion thesis: remove public market scrutiny and quarterly earnings pressure to accelerate profitability without growth sacrifice","International expansion (UK, Australia, EMEA) at early penetration — meaningful organic growth vector with no additional product investment required","Net cash position (~$690M) de-risks LBO leverage and provides optionality for bolt-on M&A within the construction tech ecosystem"],
    aiRationale:["SoR for construction project management — covers scheduling, RFIs, submittals, change orders, and financial management across the full project lifecycle","Seat-based creates compression risk but construction workflows require coordination across hundreds of stakeholders per project — AI cannot easily replace the coordination layer","Physical construction complexity limits AI displacement: site conditions, permitting, subcontractor dependencies, and regulatory inspections are highly variable and human-judgment-intensive","AI tools targeting construction (Buildots, OpenSpace) focus on site monitoring and progress tracking — adjacent to Procore's PM workflows, not substitutive","Medium risk: SoR status and construction workflow complexity provide meaningful protection; seat-based pricing in a moderately AI-exposed segment"]},
-  {name:"Clearwater Analytics",vertical:"Financial Services",sor:true,seat:false,pricing:"Usage-Based",peOwned:false,tev:7133,ntmRev:973,growth:27,gm:79,ebitda:35,cagr:35,ntmRevX:7.3,peFit:"High",aiRisk:"Low",avoid:true,
-   desc:"Cloud-native investment accounting and analytics platform for insurance companies, asset managers, and institutional investors. Deep SoR for portfolio reporting, regulatory compliance, and middle/back-office operations with migrations taking 2–3 years. AUM-based SaaS model where revenue compounds naturally as client portfolios grow.",
-   sd:{sharePrice:23.50,sharesOut:271,marketCap:6364,netDebt:860-91},
-   thesis:["Already taken private — no longer a public market opportunity","Exceptional business quality: 35% N3Y CAGR, 35% EBITDA, and cloud-native investment accounting SoR","AUM-based pricing model created durable compounding revenue decoupled from headcount","Strong financial SoR moat with 2–3 year implementation cycles and extreme switching costs","Shown for reference / comparable analysis only"],
-   aiRationale:["Deep SoR for investment accounting — authoritative data source for portfolio analytics globally","Regulatory reporting requirements (SEC, IFRS) create structural demand independent of AI trends","AI augments analyst productivity within the platform rather than displacing the accounting SoR","Switching costs extreme — clients embed Clearwater into middle/back office; migrations take 2–3 years","Usage-based AUM model means revenue grows with markets and assets not headcount"]},
   {name:"ServiceTitan",vertical:"Field Services",sor:true,seat:true,pricing:"Seat-Based",peOwned:false,tev:6520,ntmRev:1108,growth:15,gm:74,ebitda:12,cagr:18,ntmRevX:5.9,peFit:"Medium",aiRisk:"Medium",avoid:false,
    desc:"Field service management platform for home services trades (HVAC, plumbing, electrical, roofing) covering scheduling, dispatch, invoicing, and financing. The dominant SoR for SMB field service businesses in North America with embedded payments revenue. Seat-based subscription charged per technician or office user.",
    sd:{sharePrice:73.50,sharesOut:92,marketCap:6797,netDebt:165-443},
    thesis:["Dominant field services SoR with 15% growth and 74% GM — high quality underlying business","43% off 52W high represents meaningful dislocation for a category-defining platform","Key PE challenge: only 12% EBITDA requires significant operational improvement for attractive returns","18% N3Y CAGR demonstrates consistent growth with significant runway in fragmented SMB market","Take-private could accelerate profitability improvement by removing growth-at-all-costs pressure"],
    aiRationale:["Field service SoR for HVAC, plumbing, electrical — deeply embedded in SMB operational workflows","Seat-based creates compression risk as AI scheduling and dispatch tools reduce headcount per business","SMB customers in field services are historically slow to adopt — limits near-term AI disruption","AI dispatching tools are emerging but lack ServiceTitan's workflow integration and ecosystem depth","Medium risk: SoR status provides protection but seat-based in an AI-targeted scheduling workflow"]},
-  {name:"AppFolio",vertical:"Real Estate / PropTech",sor:true,seat:false,pricing:"Usage-Based",peOwned:false,tev:6132,ntmRev:1144,growth:17,gm:64,ebitda:29,cagr:18,ntmRevX:5.4,peFit:"High",aiRisk:"Low-Medium",avoid:false,
+  {name:"AppFolio",vertical:"Real Estate / PropTech",sor:true,seat:false,pricing:"Usage-Based",peOwned:false,tev:6132,ntmRev:1144,growth:17,gm:64,ebitda:29,cagr:18,ntmRevX:5.4,peFit:"High",aiRisk:"Low",avoid:false,
    desc:"Property management software for residential and commercial real estate operators covering leasing, maintenance, accounting, screening, and payments. The SoR for SMB property managers with a payments flywheel that grows as portfolios scale. Usage-based model with fees tied to units under management and payment volumes.",
    sd:{sharePrice:175.68,sharesOut:36,marketCap:6346,netDebt:38-251},
    thesis:["Dominant SMB property management SoR with usage-based payments revenue flywheel","Strong 18% N3Y CAGR with 17% NTM growth demonstrates consistent execution and durable demand","45% off 52W high — significant dislocation for a high-quality profitable compounder","Usage-based payments creates natural growth as property portfolios scale over time","Clear margin expansion from 29% toward 40% EBITDA as software mix grows vs. lower-margin services"],
@@ -153,12 +148,12 @@ const RAW=[
    sd:{sharePrice:48.60,sharesOut:47,marketCap:2265,netDebt:1116-759},
    thesis:["Very low multiple at 2.2x NTM with 37% EBITDA — one of cheapest quality businesses in screen","Nonprofit SoR with high switching costs in large enterprise clients — durable revenue despite slow growth","Take-private rationale: remove public overhang, execute cost optimization without quarterly scrutiny","32% off 52W high with stable cash flows — strong yield/dividend recapitalization candidate","Primary risk is 2% N3Y CAGR and seat-based model in an AI-disrupted fundraising market"],
    aiRationale:["Nonprofit SoR with embedded donor management and fundraising workflows in large enterprise clients","Seat-based creates compression risk as AI fundraising tools proliferate","AI-native fundraising platforms are gaining traction in mid-market nonprofits","Low N3Y CAGR of 2% suggests competitive pressure already manifesting","Mitigant: large enterprise nonprofit clients have high switching costs and multi-year contracts"]},
-  {name:"nCino",vertical:"Financial Services",sor:true,seat:false,pricing:"Usage-Based",peOwned:false,tev:2083,ntmRev:644,growth:8,gm:67,ebitda:26,cagr:9,ntmRevX:3.2,peFit:"Medium",aiRisk:"Low-Medium",avoid:false,
+  {name:"nCino",vertical:"Financial Services",sor:true,seat:false,pricing:"Usage-Based",peOwned:false,tev:2083,ntmRev:644,growth:8,gm:67,ebitda:26,cagr:9,ntmRevX:3.2,peFit:"Medium",aiRisk:"Low",avoid:false,
    desc:"Bank operating system built on the Salesforce platform for loan origination, account opening, and relationship management at commercial banks and credit unions. The SoR for commercial lending workflows at community and regional banks globally. Usage-based model tied to loan origination volumes and active banker seats.",
    sd:{sharePrice:16.52,sharesOut:119,marketCap:1967,netDebt:237-121},
    thesis:["Bank operating system SoR with usage-based model at an attractive 3.2x NTM — good value in defensible niche","Regulatory protective moat in banking IT makes this a durable high-switching-cost business","49% off 52W high despite stable fundamentals — sector dislocation creating an entry opportunity","Growth decelerating to 8% is a concern but margin expansion from 26% provides earnings upside","Smaller scale ($2.1B TEV) limits competition from largest PE funds — less competitive auction likely"],
    aiRationale:["Bank operating SoR built on Salesforce — regulatory environment highly protective of incumbent vendors","AI augments loan underwriting within nCino's platform rather than displacing the SoR itself","Usage-based with no seat compression risk — revenue tied to loan origination volume","Financial regulatory complexity makes bank IT replacement decisions extremely slow and costly","Some risk that Salesforce AI tools erode nCino's differentiation over time"]},
-  {name:"Agilysys",vertical:"Travel / Hospitality",sor:true,seat:false,pricing:"Usage-Based",peOwned:false,tev:2020,ntmRev:359,growth:14,gm:64,ebitda:22,cagr:15,ntmRevX:5.6,peFit:"Medium",aiRisk:"Low-Medium",avoid:false,
+  {name:"Agilysys",vertical:"Travel / Hospitality",sor:true,seat:false,pricing:"Usage-Based",peOwned:false,tev:2020,ntmRev:359,growth:14,gm:64,ebitda:22,cagr:15,ntmRevX:5.6,peFit:"Medium",aiRisk:"Low",avoid:false,
    desc:"Hospitality management software (PMS, POS) for hotels, resorts, casinos, and cruise lines covering reservations, room management, F&B, and payment processing. The SoR for upscale and resort hospitality operations with usage-based payments revenue growing alongside transaction volumes. Usage-based model with fees tied to property transactions and bookings.",
    sd:{sharePrice:73.68,sharesOut:28,marketCap:2046,netDebt:47-73},
    thesis:["Niche hospitality SoR with usage-based payments providing a durable compounding revenue stream","Strong 14% growth and 15% N3Y CAGR with significant margin expansion runway from 22% EBITDA","48% off 52W high creates an attractive entry point for a high-quality niche platform","Key limitation: small scale ($359M NTM revenue) may not justify standalone large-cap PE attention","Most attractive as a bolt-on to a broader hospitality or travel software platform"],
@@ -168,7 +163,7 @@ const RAW=[
    sd:{sharePrice:15.40,sharesOut:104,marketCap:1600,netDebt:369-99},
    thesis:["High organic growth at 19% NTM / 23% N3Y CAGR — compelling growth story at only 3.4x NTM","Usage-based model provides revenue resilience without headcount compression risk","51% off 52W high creates attractive growth-at-reasonable-price entry with asymmetric upside","Clear path to significantly higher EBITDA margins from current 19% as scale accrues","Key risk: not a SoR in a competitive digital banking market — must underwrite growth sustainability"],
    aiRationale:["Digital banking for credit unions and community banks — regulated environment provides near-term protection","Not a core SoR — sits in the digital experience layer above core banking","AI could enable community banks to build better experiences in-house using LLM tooling","23% N3Y CAGR is strong but AI-native fintech competition is an emerging headwind","Medium risk: regulatory complexity protects near term but digital banking UX is disruption-prone"]},
-  {name:"Intapp",vertical:"Financial Services / Legal",sor:true,seat:true,pricing:"Seat-Based",peOwned:false,tev:1621,ntmRev:624,growth:14,gm:78,ebitda:22,cagr:15,ntmRevX:2.6,peFit:"Medium",aiRisk:"Medium-High",avoid:false,
+  {name:"Intapp",vertical:"Financial Services / Legal",sor:true,seat:true,pricing:"Seat-Based",peOwned:false,tev:1621,ntmRev:624,growth:14,gm:78,ebitda:22,cagr:15,ntmRevX:2.6,peFit:"Medium",aiRisk:"High",avoid:false,
    desc:"Professional services platform covering conflict checking, time tracking, billing, and compliance for law firms, accounting firms, and investment banks. The SoR for professional services risk and compliance workflows in regulated industries with embedded multi-year enterprise contracts. Seat-based subscription charged per professional.",
    sd:{sharePrice:22.50,sharesOut:85,marketCap:1912,netDebt:23-313},
    thesis:["Deep discount at 66% of 52W high — most dislocated SoR at only 2.6x NTM Revenue","SoR status in compliance-heavy professional services workflows provides near-term switching cost protection","14% growth and 78% GM demonstrate solid underlying business quality despite valuation dislocation","Contrarian value opportunity if AI risk can be managed through continued product investment","Key question: can compliance workflow stickiness outlast AI-driven headcount compression in legal/PE clients?"],
@@ -210,7 +205,7 @@ const RAW=[
    thesis:["High growth sports data platform at 2.8x NTM — compelling value for 21% growth","Usage-based model tied to sports data licensing and live odds — durable sports betting tailwind","42% off 52W high creates an attractive entry point for a high-growth niche platform","Not a SoR but exclusive sports data rights create significant competitive moat","PE take-private candidate — sports betting tailwind, improving margins, reasonable entry valuation"],
    aiRationale:["Sports data and odds platform — usage-based with exclusive data rights creating competitive moat","AI enhances real-time sports analytics within Sportradar's platform rather than threatening it","Exclusive data rights from sports leagues create a structural barrier AI cannot easily replicate","Usage-based model tied to data licensing and betting volumes — not exposed to headcount compression","Medium risk: not a SoR but exclusive data rights and usage-based model provide meaningful protection"]},
   // ── HYBRID VSaaS ──
-  {name:"Synopsys",vertical:"Construction & Design",sor:false,seat:false,pricing:"Usage-Based",peOwned:false,tev:90364,ntmRev:9960,growth:26,gm:83,ebitda:41,cagr:20,ntmRevX:9.1,peFit:"Low",aiRisk:"Low-Medium",avoid:false,
+  {name:"Synopsys",vertical:"Construction & Design",sor:false,seat:false,pricing:"Usage-Based",peOwned:false,tev:90364,ntmRev:9960,growth:26,gm:83,ebitda:41,cagr:20,ntmRevX:9.1,peFit:"Low",aiRisk:"Low",avoid:false,
    desc:"Electronic design automation (EDA) software for semiconductor chip design covering synthesis, simulation, verification, and IP alongside Cadence as the two dominant platforms globally. AI chip design is built on top of Synopsys tools, making AI a demand driver rather than a threat. Usage-based model tied to design activity and chip complexity.",
    sd:{sharePrice:428,sharesOut:185,marketCap:79036,netDebt:14293-2966},
    thesis:["EDA software leader — mission critical for semiconductor design with near-monopoly market position","26% growth with 83% GM and 41% EBITDA — exceptional quality at scale","Way above $10B TEV — not a PE take-private candidate; pure public market benchmark","AI chip design tools being developed on top of Synopsys platform — AI is a tailwind","Included for benchmark purposes — best-in-class EDA software quality and moat"],
@@ -220,7 +215,7 @@ const RAW=[
    sd:{sharePrice:547,sharesOut:82,marketCap:45015,netDebt:1910-1746},
    thesis:["Public safety platform with 29% growth and 31% N3Y CAGR — exceptional compounding","Usage-based hardware/software/cloud model tied to law enforcement adoption","Way above $10B TEV — not a PE take-private candidate; included for benchmark purposes","AI is an explicit product tailwind — Axon AI tools for evidence management command premium pricing","37% off 52W high but TEV way too large for PE take-private consideration"],
    aiRationale:["Public safety platform — usage-based with government contracts creating extreme revenue durability","AI enhances evidence management, body cam analysis, and dispatch optimization within Axon's platform","Government procurement creates structural moat — no AI-native competitor has law enforcement relationships","Usage-based model tied to device and software adoption rather than headcount","Low risk: government relationships, regulatory approvals, and usage-based model create strong protection"]},
-  {name:"Constellation Software",vertical:"Diversified VSaaS",sor:true,seat:false,pricing:"Usage-Based",peOwned:false,tev:43200,ntmRev:13813,growth:16,gm:29,ebitda:29,cagr:16,ntmRevX:3.1,peFit:"Low",aiRisk:"Low-Medium",avoid:false,
+  {name:"Constellation Software",vertical:"Diversified VSaaS",sor:true,seat:false,pricing:"Usage-Based",peOwned:false,tev:43200,ntmRev:13813,growth:16,gm:29,ebitda:29,cagr:16,ntmRevX:3.1,peFit:"Low",aiRisk:"Low",avoid:false,
    desc:"Decentralized acquirer of vertical market software (VMS) businesses across public sector, healthcare, and industrial niches. Owns 800+ niche software companies managed through autonomous business units with a disciplined buy-and-hold acquisition philosophy. Diverse usage-based and subscription revenue across a highly fragmented portfolio.",
    sd:{sharePrice:1897,sharesOut:21,marketCap:40661,netDebt:4533-1994},
    thesis:["Diversified vertical software acquirer — 16% growth through disciplined M&A compounding","Decentralized operating model creates durable returns through portfolio of niche VMS businesses","Way above $10B TEV — not a PE take-private candidate; benchmark for diversified VMS strategy","29% EBITDA across a diversified portfolio of >800 vertical software businesses","Included as benchmark — most relevant comp for PE roll-up strategies in vertical software"],
@@ -250,13 +245,13 @@ const RAW=[
    sd:{sharePrice:21,sharesOut:33,marketCap:690,netDebt:340-47},
    thesis:["Extraordinary 96% GM at only 1.4x NTM — exceptional unit economics at a deep value entry","Italian healthcare IT SoR with strong regulatory protection and EU AI Act tailwinds for incumbents","6% below 52W high — market has not yet identified this as a dislocated opportunity","Usage-based model with 11% N3Y CAGR provides durable compounding revenue in a protected market","Key limitations: small scale ($982M TEV), Italian concentration, 21% EBITDA leaves room for improvement"],
    aiRationale:["Italian healthcare IT SoR in a highly regulated EU public health system","AI adoption in European public healthcare is extremely slow due to regulatory and data sovereignty constraints","GDPR and EU AI Act create additional barriers to displacement of established healthcare IT vendors","Usage-based model insulates from headcount compression","Geographic concentration in Italy limits exposure to US and global AI platforms"]},
-  {name:"Phreesia",vertical:"Healthcare",sor:false,seat:false,pricing:"Usage-Based",peOwned:false,tev:651,ntmRev:556,growth:15,gm:70,ebitda:24,cagr:13,ntmRevX:1.2,peFit:"Low-Medium",aiRisk:"Medium-High",avoid:true,
+  {name:"Phreesia",vertical:"Healthcare",sor:false,seat:false,pricing:"Usage-Based",peOwned:false,tev:651,ntmRev:556,growth:15,gm:70,ebitda:24,cagr:13,ntmRevX:1.2,peFit:"Low-Medium",aiRisk:"High",avoid:true,
    desc:"Patient intake and engagement platform automating check-in, insurance verification, consent forms, and patient communications at the point of care. Sits at the front-desk workflow layer rather than core clinical systems, making it more replicable than a true SoR. Usage-based model with fees tied to patient visit volumes at provider clients.",
    sd:{sharePrice:12,sharesOut:58,marketCap:717,netDebt:18-84},
    thesis:["Extremely cheap at 1.2x NTM — one of the lowest multiples in the entire screen","62% off 52W high reflects deep investor concern about AI disruption to patient intake","Usage-based with 15% growth and 70% GM — business continues to grow despite AI headwinds","Distressed valuation could attract special situations or strategic buyer with adjacent workflows","Avoid for traditional PE: medium-high AI risk in an explicitly AI-targeted workflow at insufficient scale"],
    aiRationale:["Patient intake and engagement — usage-based but not a core clinical SoR","AI patient intake tools proliferating rapidly targeting this exact workflow","Patient intake is one of the most targeted healthcare AI automation use cases","Usage-based provides resilience but the core workflow is highly replicable by AI tools","Medium-high risk: not a SoR in a workflow AI is explicitly designed to automate away"]},
   // ── LOW GROWTH / OTHER ──
-  {name:"SS&C Technologies",vertical:"Financial Services",sor:true,seat:false,pricing:"Usage-Based",peOwned:false,tev:26432,ntmRev:6771,growth:7,gm:58,ebitda:40,cagr:6,ntmRevX:3.9,peFit:"Low",aiRisk:"Low-Medium",avoid:false,
+  {name:"SS&C Technologies",vertical:"Financial Services",sor:true,seat:false,pricing:"Usage-Based",peOwned:false,tev:26432,ntmRev:6771,growth:7,gm:58,ebitda:40,cagr:6,ntmRevX:3.9,peFit:"Low",aiRisk:"Low",avoid:false,
    desc:"Financial services technology and outsourcing company providing fund administration, transfer agency, and wealth management software and services to hedge funds, private equity, and asset managers. Processes $40T+ in fund assets as a mission-critical SoR for back-office operations. Usage-based model tied to AUM and transaction volumes.",
    sd:{sharePrice:75.85,sharesOut:254,marketCap:19252,netDebt:7647-467},
    thesis:["Large financial services processing SoR with 40% EBITDA and usage-based model","7% growth with stable margins — infrastructure-like cash generation profile","Above $10B TEV — not a primary PE take-private target at this scale; benchmark name","High leverage already in place (net debt ~$7.2B) limits incremental LBO capacity","Included for benchmark purposes — relevant for financial services software comparables"],
@@ -266,7 +261,7 @@ const RAW=[
    sd:{sharePrice:157.13,sharesOut:119,marketCap:18647,netDebt:1370-185},
    thesis:["Industrial IoT and PLM SoR with 85% GM and 48% EBITDA — exceptional profitability","5% growth reflects mature installed base but highly durable recurring revenue","Above $10B TEV — not a PE take-private candidate; benchmark for industrial software quality","Usage-based model with SoR status in manufacturing creates durable moat","Included for benchmark purposes — high-quality industrial software with strong margins"],
    aiRationale:["PLM and industrial IoT SoR — deeply embedded in manufacturing and product development workflows","AI tools embedded natively (PTC AI) as platform enhancements rather than competitive threats","85% GM and 48% EBITDA reflect high software value delivery in specialized industrial domain","Usage-based model tied to device and engineering activity rather than headcount","Low risk: industrial SoR status, usage-based model, and regulatory requirements provide strong protection"]},
-  {name:"Trimble",vertical:"Construction & Design",sor:false,seat:false,pricing:"Usage-Based",peOwned:false,tev:17688,ntmRev:3910,growth:8,gm:72,ebitda:30,cagr:4,ntmRevX:4.5,peFit:"Low",aiRisk:"Low-Medium",avoid:false,
+  {name:"Trimble",vertical:"Construction & Design",sor:false,seat:false,pricing:"Usage-Based",peOwned:false,tev:17688,ntmRev:3910,growth:8,gm:72,ebitda:30,cagr:4,ntmRevX:4.5,peFit:"Low",aiRisk:"Low",avoid:false,
    desc:"Positioning and workflow software combining GPS/sensor hardware with cloud software for construction, geospatial, and agriculture applications. Portfolio transformation toward pure software subscription ongoing with hardware providing field data capture. Usage-based subscription tied to field device activity and project management workflows.",
    sd:{sharePrice:67.79,sharesOut:242,marketCap:16371,netDebt:1561-244},
    thesis:["Construction and geospatial technology platform with 72% GM and 30% EBITDA","Portfolio transformation toward pure software subscription ongoing — improving margin profile","Above $10B TEV — not a PE take-private candidate; benchmark for construction tech quality","8% growth with 4% N3Y CAGR reflects mixed portfolio of software and hardware businesses","Included for benchmark purposes — relevant comp for construction software companies"],
@@ -276,7 +271,7 @@ const RAW=[
    sd:{sharePrice:91.44,sharesOut:71,marketCap:6454,netDebt:659-103},
    thesis:["Global core banking SoR with 84% GM and 40% EBITDA — high quality financial infrastructure","7% growth in a highly regulated, sticky market with extreme switching costs","14% off 52W high — limited dislocation but solid value at 6.1x NTM for a core banking SoR","Usage-based model with SoR status in banking creates extremely durable revenue","PE take-private candidate — core banking SoR with margin expansion potential under private ownership"],
    aiRationale:["Core banking SoR — mission critical for retail and commercial banking operations globally","Banking regulatory complexity (Basel, IFRS 9) makes replacement of core systems extremely rare","AI enhances banking analytics and decisioning within Temenos' ecosystem rather than displacing the core","Usage-based model tied to transaction volumes and banking activity rather than headcount","Low risk: core banking SoR status and regulatory protection provide one of the strongest moats in tech"]},
-  {name:"Sabre Corporation",vertical:"Travel / Hospitality",sor:true,seat:false,pricing:"Usage-Based",peOwned:false,tev:3948,ntmRev:2938,growth:5,gm:56,ebitda:20,cagr:0,ntmRevX:1.3,peFit:"Low",aiRisk:"Medium-High",avoid:true,
+  {name:"Sabre Corporation",vertical:"Travel / Hospitality",sor:true,seat:false,pricing:"Usage-Based",peOwned:false,tev:3948,ntmRev:2938,growth:5,gm:56,ebitda:20,cagr:0,ntmRevX:1.3,peFit:"Low",aiRisk:"High",avoid:true,
    desc:"Global distribution system (GDS) connecting airlines, hotels, and travel agencies for inventory management and booking. Faces structural disruption from NDC (airline direct distribution) and AI-native travel booking platforms eroding GDS volumes. Usage-based model tied to booking and reservation volumes under secular pressure.",
    sd:{sharePrice:1.08,sharesOut:416,marketCap:450,netDebt:4410-911},
    thesis:["Deeply leveraged travel technology infrastructure company — $3.5B net debt is the key constraint","5% growth with 0% N3Y CAGR and 20% EBITDA limits PE take-private feasibility","GDS market facing structural disruption from AI-native travel booking and NDC transition","74% off 52W high reflects structural business model challenges not just market dislocation","Avoid: excess leverage, near-zero growth, and medium-high AI risk from GDS disruption"],
@@ -286,12 +281,12 @@ const RAW=[
    sd:{sharePrice:83.52,sharesOut:37,marketCap:3112,netDebt:1082-416},
    thesis:["ATM and banking hardware/software company — not a software business at 27% GM","2% growth with minimal N3Y CAGR — limited organic momentum in a declining ATM market","Despite low 1.0x NTM multiple, 14% EBITDA limits debt service capacity for LBO","Digital banking trends are secularly reducing ATM demand over the long term","Avoid: hardware-heavy business model with secular headwinds and insufficient software margins"],
    aiRationale:["Banking hardware and software — ATM market faces secular decline from digital banking adoption","AI-powered digital banking is accelerating the shift away from physical ATM infrastructure","27% gross margins reflect significant hardware component — limited software moat protection","Medium risk: not AI-disrupted in the traditional sense but faces secular hardware demand decline","Combined secular and AI risk from digital banking makes near-term revenue growth challenging"]},
-  {name:"Verra Mobility",vertical:"Auto / GovTech",sor:false,seat:false,pricing:"Usage-Based",peOwned:false,tev:3726,ntmRev:1037,growth:5,gm:84,ebitda:40,cagr:8,ntmRevX:3.6,peFit:"Medium-High",aiRisk:"Low-Medium",avoid:false,
+  {name:"Verra Mobility",vertical:"Auto / GovTech",sor:false,seat:false,pricing:"Usage-Based",peOwned:false,tev:3726,ntmRev:1037,growth:5,gm:84,ebitda:40,cagr:8,ntmRevX:3.6,peFit:"Medium-High",aiRisk:"Low",avoid:false,
    desc:"Government-contracted tolling and photo enforcement platform serving municipalities, rental car companies, and toll authorities. Long-term municipal contracts (5–10 years) provide infrastructure-like revenue predictability with very high gross margins. Usage-based model tied to vehicle transactions and toll processing volumes.",
    sd:{sharePrice:16.92,sharesOut:161,marketCap:2728,netDebt:1066-68},
    thesis:["Stable government-contracted tolling with 84% GM and 40% EBITDA at only 3.6x NTM — attractive entry","Long-term municipal contracts provide exceptional visibility and predictable FCF for debt service","Usage-based with infrastructure characteristics — more akin to a toll road than a software business","35% off 52W high despite no fundamental deterioration — pure technical selloff in software sector","Limited AI risk given physical infrastructure nature; EV/AV complexity creates additional runway"],
    aiRationale:["Government-contracted tolling and photo enforcement — physical infrastructure with durable demand","AI enhances enforcement accuracy but cannot displace underlying government contracts and infrastructure","Long-term municipal contracts (5–10 years) provide extreme revenue visibility across the hold period","Usage-based model tied to vehicle transactions rather than software seats","Low risk: regulatory and physical nature creates barriers no AI tool can replicate"]},
-  {name:"EverCommerce",vertical:"Field Services",sor:false,seat:false,pricing:"Usage-Based",peOwned:false,tev:2473,ntmRev:627,growth:6,gm:78,ebitda:31,cagr:-2,ntmRevX:3.9,peFit:"Low-Medium",aiRisk:"Medium-High",avoid:true,
+  {name:"EverCommerce",vertical:"Field Services",sor:false,seat:false,pricing:"Usage-Based",peOwned:false,tev:2473,ntmRev:627,growth:6,gm:78,ebitda:31,cagr:-2,ntmRevX:3.9,peFit:"Low-Medium",aiRisk:"High",avoid:true,
    desc:"SMB software roll-up across field services, fitness, and home services verticals covering scheduling, payments, marketing, and CRM. Aggregates ~600,000 SMB customers across fragmented niche verticals via acquisition with no deep SoR anchor in any single vertical. Usage-based model across a diverse portfolio of point solutions.",
    sd:{sharePrice:11.49,sharesOut:180,marketCap:2064,netDebt:545-136},
    thesis:["Roll-up with -2% N3Y CAGR reveals organic revenue deterioration beneath acquisition-driven headlines","Not a SoR in any vertical — lacks deep workflow integration that protects against AI displacement","14% off 52W high — insufficient discount given fundamental growth concerns and AI risk","78% GM is attractive but 31% EBITDA with declining organic growth limits margin expansion confidence","Avoid: negative organic growth, not a SoR, and medium-high AI risk across fragmented SMB verticals"],
@@ -526,7 +521,7 @@ const TOP5_DATA={
 const LTM_EBITDA={
   "Autodesk":2846,"Veeva Systems":1450,"Tyler Technologies":665,"Toast":659,
   "Bentley Systems":538,"Guidewire Software":271,"Nemetschek":452,
-  "Manhattan Associates":395,"Procore Technologies":294,"Clearwater Analytics":261,"ServiceTitan":140,
+  "Manhattan Associates":395,"Procore Technologies":294,"ServiceTitan":140,
   "AppFolio":257,"Waystar":474,"CCC Intelligent Solutions":443,"Doximity":352,
   "Q2 Holdings":193,"Blackbaud":410,"nCino":135,"Agilysys":63,
   "Alkami Technology":65,"Intapp":107,"Alfa Financial Software":60,
@@ -542,7 +537,7 @@ const LTM_EBITDA={
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 const fmt  = n=>Math.abs(n)>=1000?`$${(n/1000).toFixed(1)}B`:`$${Math.round(Math.abs(n))}M`;
 const fmtN = n=>Math.abs(n)>=1000?`${(n/1000).toFixed(1)}B`:`${Math.round(Math.abs(n))}M`;
-const riskColor=r=>({"Low":"bg-green-100 text-green-800","Low-Medium":"bg-lime-100 text-lime-800","Medium":"bg-yellow-100 text-yellow-800","Medium-High":"bg-orange-100 text-orange-800","High":"bg-red-100 text-red-800"})[r]||"bg-gray-100";
+const riskColor=r=>({"Low":"bg-green-100 text-green-800","Medium":"bg-yellow-100 text-yellow-800","High":"bg-red-100 text-red-800"})[r]||"bg-gray-100";
 const irrColor=v=>v>=IRR_GREAT?"text-green-700 font-bold":v>=IRR_GOOD?"text-lime-700 font-bold":v>=IRR_OK?"text-yellow-600":"text-red-500";
 const irrLabel=v=>v>=IRR_GREAT?"★ Great":v>=IRR_GOOD?"✓ Good":v>=IRR_OK?"~ OK":"✗ Weak";
 const scColor=s=>s>=7.5?"text-green-700":s>=6.0?"text-lime-700":s>=4.5?"text-yellow-600":"text-red-500";
@@ -557,7 +552,7 @@ function lboEntryTEV(sd,ntmRev,ntmRevX){
 function getDimExpl(co,dim,s){
   if(dim==="val")return`EV/EBITDA ${s.evEbitda}x (primary, max 2pts): ${s.evEbitda<10?"<10x — attractive":s.evEbitda<15?"10–15x — moderate":s.evEbitda<20?"15–20x — elevated":">20x — premium"}. EV/Rev ${s.evRev}x (secondary, max 1pt): ${s.evRev<3?"<3x deep value":s.evRev<6?"3–6x reasonable":s.evRev<10?"6–10x above avg":">10x premium"}. Score: ${s.valScore}/3.0`;
   if(dim==="qual"){const mp=co.sor?1.0:0.35;const rm=(co.pricing==="Usage-Based"?0.35:0.10)+(!co.seat?0.20:0);const pp=Math.min((co.gm/100)*0.75,0.75);const ml=(Math.min(Math.max(co.cagr,0),25)/25)*0.40;const ig={"High":0.30,"Medium-High":0.225,"Medium":0.15,"Low-Medium":0.075,"Low":0}[co.peFit]||0.15;return`Mkt Pos ${mp.toFixed(2)}/1.0 (${co.sor?"SoR":"non-SoR"}). Rev Moat ${rm.toFixed(2)}/0.55 (${co.pricing}${!co.seat?", non-seat":""} ). Pricing Pwr ${pp.toFixed(2)}/0.75 (GM ${co.gm}%). Mkt Lead ${ml.toFixed(2)}/0.40 (N3Y CAGR ${co.cagr}%). Grade ${ig.toFixed(3)}/0.30 (PE Fit: ${co.peFit}). Score: ${s.qualScore}/3.0`;}
-  if(dim==="ai")return`Base "${co.aiRisk}" → ${{"Low":2.6,"Low-Medium":2.0,"Medium":1.4,"Medium-High":0.8,"High":0.1}[co.aiRisk]} pts. SoR: ${co.sor?"+0.2":"+0"}. Pricing: ${co.pricing==="Usage-Based"?"+0.2 (usage)":"-0.2 (seat)"}. Score: ${s.aiScore}/3.0`;
+  if(dim==="ai")return`Base "${co.aiRisk}" → ${{"Low":2.6,"Medium":1.4,"High":0.1}[co.aiRisk]} pts. SoR: ${co.sor?"+0.2":"+0"}. Pricing: ${co.pricing==="Usage-Based"?"+0.2 (usage)":"-0.2 (seat)"}. Score: ${s.aiScore}/3.0`;
   if(dim==="lbo")return`IRR ${s._lbo?.irr}% → ${irrLabel(s._lbo?.irr||0)}. Entry ${fmt(s._lbo?.entryTEV)} at ${s._lbo?.entryEBITDAMult}x EV/EBITDA. Exit ${fmt(s._lbo?.exitTEV)} at ${s._lbo?.exitEBITDAMult}x. MOIC ${s._lbo?.moic}x. Score: ${s.lboScore}/3.0`;
   if(dim==="dcf")return`DCF/share: $${s._dcfShare??'N/A'} vs current $${co.sd?.sharePrice??'N/A'}. Intrinsic TEV ${fmt(s._dcf?.intrinsic)} vs TEV ${fmt(co.tev)}. PV FCFs: ${fmt(s._dcf?.pvSum)}, PV TV: ${fmt(s._dcf?.pvTV)}. Score: ${s.dcfScore}/2.0`;
   if(dim==="pe")return`PE Fit "${co.peFit}": FCF predictability, margin levers, scale, mgmt alignment. Score: ${s.peScore}/1.0`;
@@ -673,7 +668,7 @@ export default function App(){
           </div>
           {[["Valuation (3pts)","EV/EBITDA primary (max 2pts): <10x ≈ maximum; >20x ≈ near zero. EV/Revenue secondary (max 1pt): <3x maximum; >12x minimum.","bg-blue-50 border-blue-200"],
             ["Business Quality (3pts)","Market Positioning: SoR=1.0, non-SoR=0.35 (max 1.0pt). Revenue Moat: usage-based+0.35/seat-based+0.10, non-seat-locked+0.20 (max 0.55pt). Pricing Power: GM%×0.75 as competitive moat proxy (max 0.75pt). Market Leadership: N3Y CAGR capped at 25% (max 0.40pt). Investment Grade: PE Fit signal (max 0.30pt).","bg-purple-50 border-purple-200"],
-            ["AI Risk (3pts)","Base: Low=2.6, Low-Medium=2.0, Medium=1.4, Medium-High=0.8, High=0.1. Bonuses: SoR +0.2, Usage-Based +0.2, Seat-Based −0.2, PE-Owned +0.2.","bg-red-50 border-red-200"],
+            ["AI Risk (3pts)","Base: Low=2.6, Medium=1.4, High=0.1. Bonuses: SoR +0.2, Usage-Based +0.2, Seat-Based −0.2, PE-Owned +0.2.","bg-red-50 border-red-200"],
             ["LBO Returns (3pts)","≥25% = 3.0 | ≥20% = 2.2 | ≥15% = 1.4 | <15% = scaled to 0. Entry at 30% premium to share price, 7× leverage at 9% fixed, 5-year hold, exit multiple applied to NTM (Yr 6) EBITDA capped 20×.","bg-orange-50 border-orange-200"],
             ["DCF Upside (2pts)","Centred at 1.0. Compares DCF equity value per share vs current share price. Rises to 2.0 if significant upside; falls to 0 if significant downside.","bg-yellow-50 border-yellow-200"],
             ["PE Fit (1pt)","High=1.0, Medium-High=0.75, Medium=0.5, Low-Medium=0.25, Low=0.1.","bg-green-50 border-green-200"],
@@ -846,7 +841,23 @@ export default function App(){
               </div>
             );
           })()}
-          <div className="space-y-2">
+          {/* Column header */}
+          <div className="bg-white border border-gray-200 rounded-lg mb-1 px-3 py-1.5 text-xs text-gray-400 font-medium" style={{display:"grid",gridTemplateColumns:"28px 1fr 68px 76px 54px 60px 44px 96px 128px 78px 50px 46px 56px 16px",gap:"0 8px",alignItems:"center"}}>
+            <div></div><div>Company</div>
+            <div className="text-right">TEV</div>
+            <div className="text-right">EV/EBITDA</div>
+            <div className="text-right">EV/Rev</div>
+            <div className="text-right">EBITDA%</div>
+            <div className="text-right">Gr%</div>
+            <div className="text-right">IRR</div>
+            <div className="text-right">DCF/Share</div>
+            <div className="text-center">AI Risk</div>
+            <div className="text-center">Model</div>
+            <div className="text-center">SoR</div>
+            <div className="text-right">Score</div>
+            <div></div>
+          </div>
+          <div className="space-y-1">
             {filtered.map(co=>{
               const rank=companies.indexOf(co)+1;
               const isOpen=expanded===co.name;
@@ -859,34 +870,31 @@ export default function App(){
               return(
                 <div key={co.name} className={`bg-white rounded-lg border ${co.avoid?"border-red-200":co.tev>=10000?"border-blue-100":"border-gray-200"} overflow-hidden`}>
                   {/* Summary row */}
-                  <div className="p-3 cursor-pointer hover:bg-gray-50 select-none" onClick={()=>setExpanded(isOpen?null:co.name)}>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600 flex-shrink-0">{rank}</div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-1.5 flex-wrap">
-                          <span className="font-semibold text-gray-900">{co.name}</span>
-                          {co.avoid&&<span className="text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded-full">AVOID</span>}
-                          {co.tev>=10000&&<span className="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full">&gt;$10B</span>}
-                          {hasOv&&<span className="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full">custom</span>}
-                          <span className="text-xs text-gray-400">{co.vertical}</span>
-                        </div>
+                  <div className="px-3 py-2 cursor-pointer hover:bg-gray-50 select-none text-xs" onClick={()=>setExpanded(isOpen?null:co.name)}
+                    style={{display:"grid",gridTemplateColumns:"28px 1fr 68px 76px 54px 60px 44px 96px 128px 78px 50px 46px 56px 16px",gap:"0 8px",alignItems:"center"}}>
+                    <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center font-bold text-gray-600 flex-shrink-0">{rank}</div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1 flex-wrap">
+                        <span className="font-semibold text-gray-900 text-xs">{co.name}</span>
+                        {co.avoid&&<span className="bg-red-100 text-red-700 px-1.5 py-0.5 rounded-full">AVOID</span>}
+                        {co.tev>=10000&&<span className="bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full">&gt;$10B</span>}
+                        {hasOv&&<span className="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full">custom</span>}
                       </div>
-                      <div className="flex items-center gap-2 flex-wrap text-xs">
-                        <div className="text-center"><div className="text-gray-400">TEV</div><div className="font-semibold">{fmt(co.tev)}</div></div>
-                        <div className="text-center"><div className="text-gray-400">EV/EBITDA</div><div className="font-semibold">{co.ntmEBITDAX}x</div></div>
-                        <div className="text-center"><div className="text-gray-400">EV/Rev</div><div className="font-semibold">{co.ntmRevX}x</div></div>
-                        <div className="text-center"><div className="text-gray-400">EBITDA%</div><div className="font-semibold">{co.ebitda}%</div></div>
-                        <div className="text-center"><div className="text-gray-400">Gr%</div><div className="font-semibold">{co.growth}%</div></div>
-                        <div className="text-center"><div className="text-gray-400">IRR</div><div className={irrColor(co.lbo.irr)}>{co.lbo.irr}% {irrLabel(co.lbo.irr)}</div></div>
-                        <div className="text-center"><div className="text-gray-400">DCF/share</div><div className={co.sharePct!==null?(co.sharePct>0?"text-green-700 font-semibold":"text-red-500 font-semibold"):"text-gray-300"}>
-                          {co.sd?co.dcfShare!==null?`$${co.dcfShare} (${co.sharePct>0?"+":""}${co.sharePct}%)`:"—":"pending"}</div></div>
-                        <span className={`px-1.5 py-0.5 rounded-full font-medium ${riskColor(co.aiRisk)}`}>AI:{co.aiRisk}</span>
-                        <span className={`px-1.5 py-0.5 rounded-full font-medium ${co.pricing==="Usage-Based"?"bg-blue-100 text-blue-800":"bg-purple-100 text-purple-800"}`}>{co.pricing==="Usage-Based"?"Usage":"Seat"}</span>
-                        <span className={`px-1.5 py-0.5 rounded-full font-medium ${co.sor?"bg-indigo-100 text-indigo-800":"bg-gray-100 text-gray-500"}`}>{co.sor?"SoR✓":"~SoR"}</span>
-                        <div className="text-center ml-1"><div className="text-gray-400">Score</div><div className={`text-lg font-bold ${scColor(co.total)}`}>{co.total}</div></div>
-                      </div>
-                      <span className="text-gray-400 text-xs">{isOpen?"▲":"▼"}</span>
+                      <div className="text-gray-400 truncate">{co.vertical}</div>
                     </div>
+                    <div className="text-right font-semibold">{fmt(co.tev)}</div>
+                    <div className="text-right font-semibold">{co.ntmEBITDAX}x</div>
+                    <div className="text-right font-semibold">{co.ntmRevX}x</div>
+                    <div className="text-right font-semibold">{co.ebitda}%</div>
+                    <div className="text-right font-semibold">{co.growth}%</div>
+                    <div className={`text-right font-semibold ${irrColor(co.lbo.irr)}`}>{co.lbo.irr}%</div>
+                    <div className={`text-right font-semibold ${co.sharePct!==null?(co.sharePct>0?"text-green-700":"text-red-500"):"text-gray-300"}`}>
+                      {co.sd?co.dcfShare!==null?`$${co.dcfShare} (${co.sharePct>0?"+":""}${co.sharePct}%)`:"—":"—"}</div>
+                    <div className="flex justify-center"><span className={`px-1.5 py-0.5 rounded-full font-medium ${riskColor(co.aiRisk)}`}>{co.aiRisk}</span></div>
+                    <div className="flex justify-center"><span className={`px-1.5 py-0.5 rounded-full font-medium ${co.pricing==="Usage-Based"?"bg-blue-100 text-blue-800":"bg-purple-100 text-purple-800"}`}>{co.pricing==="Usage-Based"?"Usage":"Seat"}</span></div>
+                    <div className="flex justify-center"><span className={`px-1.5 py-0.5 rounded-full font-medium ${co.sor?"bg-indigo-100 text-indigo-800":"bg-gray-100 text-gray-500"}`}>{co.sor?"SoR":"~SoR"}</span></div>
+                    <div className={`text-right text-base font-bold ${scColor(co.total)}`}>{co.total}</div>
+                    <div className="text-gray-400 text-center">{isOpen?"▲":"▼"}</div>
                   </div>
                   {/* Expanded */}
                   {isOpen&&(
