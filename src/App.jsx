@@ -899,7 +899,7 @@ export default function App(){
             <div className="text-right">EBITDA%</div>
             <div className="text-right">Gr%</div>
             <div className="text-right">IRR</div>
-            <div className="text-right">DCF/Share <span className="text-yellow-500" title="Does not incorporate stock-based compensation">⚠</span></div>
+            <div className="text-right">DCF/Share <span className="text-red-500 font-bold" title="Does not incorporate stock-based compensation">ex-SBC</span></div>
             <div className="text-center">AI Risk</div>
             <div className="text-center">Model</div>
             <div className="text-center">SoR</div>
