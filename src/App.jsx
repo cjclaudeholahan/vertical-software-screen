@@ -355,11 +355,11 @@ const TOP5_DATA={
     ]
   },
   "GPI SpA":{
-    headline:"Italian healthcare IT SoR with 98% gross margins — EU AI Act and PNRR tailwinds protect the incumbent in a structurally insulated public health market at only 1.4x NTM Revenue",
+    headline:"Italian healthcare IT SoR at only 1.4x NTM Revenue — EU AI Act and PNRR tailwinds protect the incumbent in a structurally insulated public health market with a clear path to 30%+ EBITDA",
     business:[
       "Provides clinical information systems (CIS), digital health infrastructure, and administrative software to Italian public hospitals and regional health authorities",
       "SoR for Italian NHS digital workflows — used by the majority of Italian public hospitals for clinical records, scheduling, billing, and regulatory reporting",
-      "98% gross margin reflects pure software delivery on a fixed-cost platform; EBITDA of 21% has a clear path to 30%+ as recurring SaaS mix grows vs legacy implementation revenue",
+      "Pure software delivery on a fixed-cost platform; EBITDA of 21% has a clear path to 30%+ as recurring SaaS mix grows vs legacy implementation revenue",
       "Italy's €15B PNRR health digitization mandate creates a structural demand pipeline through 2026 that benefits the established NHS incumbent above all others"
     ],
     competition:[
@@ -376,7 +376,7 @@ const TOP5_DATA={
     ],
     thesis:[
       "1.4x NTM Revenue is the deepest value in the screen for a profitable healthcare SoR — entry TEV of ~$1.3B is at the lower end of Permira's typical transaction size but highly strategic",
-      "98% GM with a clear path to 30%+ EBITDA as recurring SaaS mix grows — operating leverage is exceptional on a fixed-cost software platform in a protected market",
+      "Clear path to 30%+ EBITDA as recurring SaaS mix grows — operating leverage is exceptional on a fixed-cost software platform in a protected market",
       "Italian NHS contracts are 5–10 year tenure by nature; revenue visibility across the hold period is among the highest in the screen",
       "EU regulatory environment and PNRR mandate create a government-backed demand tailwind that makes this a compounding business with low growth underwriting risk"
     ],
@@ -527,6 +527,50 @@ const TOP5_DATA={
         "International student recovery post-pandemic accelerates — US F-1 visa issuance growing 15%+ YoY drives education payment volumes at partner universities",
         "Healthcare OOP payment volumes compound as high-deductible plan adoption accelerates — hospital partner volumes grow 20%+ annually as patients pay larger shares of bills",
         "South Asia and Southeast Asia expansion adds new payment corridors with superior FX take rates — higher-margin international mix improves blended economics significantly"
+      ]}
+    ]
+  },
+  "Cellebrite":{
+    headline:"GovTech digital forensics SoR with 19% growth and High PE Fit — security certifications and duopoly market structure create an impregnable moat at 5.0x NTM Revenue",
+    business:[
+      "Owns both sides of the digital forensics workflow: UFED for mobile device extraction and Pathfinder/Guardian for AI-powered evidence analysis and case management",
+      "The system-of-record for digital evidence across 6,700+ law enforcement and government agencies globally — CJIS, FedRAMP, and Five Eyes certifications create multi-year switching barriers",
+      "Usage-based model with AI-enhanced investigation tools driving 30%+ net revenue retention as agencies expand from extraction-only to full investigation workflow",
+      "Government contract revenue provides multi-year visibility; $3B TEV is ideal PE size with 85% software margins and a clear path from 27% to 35%+ EBITDA"
+    ],
+    competition:[
+      "Magnet Forensics (now Thermo Fisher) is the only credible competitor after merging with Grayshift — market is effectively a duopoly with high certification barriers",
+      "MSAB (Swedish, publicly listed) competes on extraction but lacks Cellebrite's analytics, AI, and case management breadth — single-point solution vs integrated platform",
+      "No AI-native startup can replicate the zero-day exploit research and hardware engineering required for mobile device extraction — this is cybersecurity R&D, not software features",
+      "Security certifications (CJIS, FedRAMP, Five Eyes) require 2–3 year investment cycles and government trust that cannot be fast-tracked by any new entrant"
+    ],
+    aiRisk:[
+      "AI is the single biggest product catalyst: AI-powered evidence search (natural language queries over extracted data), auto-categorization of images/videos, and pattern detection are all premium features",
+      "The extraction layer requires zero-day exploit research and hardware engineering that AI startups cannot replicate — the moat is cybersecurity R&D, not software features",
+      "Second-order AI effect is positive: as criminals use AI to generate deepfakes, encrypted communications, and synthetic identities, demand for advanced digital forensics increases",
+      "Low risk: digital forensics is one of the clearest AI-as-tailwind categories — AI makes the product better, makes the market larger, and the certification moat prevents AI-native disruption"
+    ],
+    thesis:[
+      "5.0x NTM Revenue with High PE Fit and Low AI Risk — $3B TEV is the ideal size for PE with best-in-class GovTech moat and 18% N3Y CAGR",
+      "Margin expansion from 27% to 35%+ EBITDA is highly achievable as high-margin AI analytics products (Guardian, Pathfinder AI) grow as a percentage of the revenue mix",
+      "Duopoly market with Thermo Fisher/Magnet is structurally stable — neither competitor has incentive to compete on price and both benefit from growing law enforcement budgets",
+      "Exit path is clear: strategic buyers include Axon, Motorola Solutions, Palantir, or L3Harris — all have adjacent GovTech platforms and would pay premium for the digital forensics SoR with AI growth"
+    ],
+    scenarios:[
+      {growthDelta:-5,marginDelta:-3,exitFactor:0.8,reasons:[
+        "Government budget sequestration or austerity in key markets (US, UK, EU) delays digital forensics procurement cycles — law enforcement IT budgets are discretionary within broader public safety",
+        "ESG and surveillance concerns from Permira LPs create reputational friction — Cellebrite's association with NSO Group and government surveillance limits LP appetite",
+        "Thermo Fisher/Magnet Forensics leverages parent company distribution to aggressively bundle forensics tools with broader laboratory equipment sales into government accounts"
+      ]},
+      {growthDelta:0,marginDelta:0,exitFactor:1.0,reasons:[
+        "Consistent with 18% N3Y CAGR; law enforcement digitization continues as device evidence becomes central to criminal investigations globally",
+        "Margin expansion from 27% toward 37% as AI-enhanced analytics (Guardian, Pathfinder AI) grow faster than legacy extraction hardware revenue",
+        "Duopoly market dynamics remain stable — Thermo Fisher/Magnet and Cellebrite both grow as the market expands without destructive competition"
+      ]},
+      {growthDelta:5,marginDelta:5,exitFactor:1.0,reasons:[
+        "AI-generated crime (deepfakes, synthetic identity fraud, encrypted communications) drives exponential demand for digital forensics — Cellebrite is the default tool for investigating AI-enabled crime",
+        "Guardian AI case management wins large federal contracts (FBI, DHS, Europol) with 7-figure ACV — enterprise upsell within existing agencies accelerates revenue growth",
+        "Cloud-based forensics-as-a-service model reduces deployment friction and enables usage-based pricing expansion — agencies pay per investigation rather than per license"
       ]}
     ]
   }
@@ -792,7 +836,7 @@ export default function App(){
                         <span>{co.ntmRevX}× NTM Rev</span>
                         <span>{co.ebitda}% EBITDA</span>
                         <span>{co.growth}% growth</span>
-                        <span>{co.gm}% GM</span>
+                        <span>N3Y CAGR {co.cagr}%</span>
                         <span className="text-yellow-300 font-bold">Score {co.total}/10</span>
                       </div>
                       {d.headline&&<p className="text-purple-100 text-xs mt-1.5 italic">{d.headline}</p>}
