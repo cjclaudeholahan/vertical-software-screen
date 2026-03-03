@@ -618,6 +618,8 @@ function SliderInput({label,value,min,max,step=1,unit="",onChange}){
   );
 }
 export default function App(){
+  const [authed,setAuthed]=useState(false);
+  const [pw,setPw]=useState("");
   const [tab,setTab]=useState("screen");
   const [avoidFilter,setAvoidFilter]=useState("All");
   const [searchQuery,setSearchQuery]=useState("");
@@ -664,6 +666,18 @@ export default function App(){
     return f;
   })();
   const dimCfg=[["val","Valuation","/3.0"],["qual","Biz Quality","/3.0"],["ai","AI Risk","/3.0"],["lbo","LBO","/3.0"],["dcf","DCF","/2.0"],["pe","PE Fit","/1.0"]];
+  if(!authed)return(
+    <div className="bg-gray-50 min-h-screen font-sans text-sm flex items-center justify-center">
+      <div className="bg-white rounded-lg shadow-lg p-8 w-80">
+        <h1 className="text-xl font-bold text-gray-900 mb-1">Vertical Software Screen</h1>
+        <p className="text-xs text-gray-500 mb-6">Permira · Enter password to continue</p>
+        <form onSubmit={e=>{e.preventDefault();if(pw==="vsaas")setAuthed(true);else{setPw("");alert("Incorrect password");}}} className="space-y-4">
+          <input type="password" value={pw} onChange={e=>setPw(e.target.value)} placeholder="Password" autoFocus className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"/>
+          <button type="submit" className="w-full bg-gray-900 text-white rounded py-2 text-sm font-medium hover:bg-gray-800 transition-colors">Enter</button>
+        </form>
+      </div>
+    </div>
+  );
   return(
     <div className="bg-gray-50 min-h-screen font-sans text-sm">
     <div className="max-w-6xl mx-auto p-4">
